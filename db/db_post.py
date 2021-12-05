@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from router.schemas import PostRequestSchema
 from sqlalchemy.orm.session import Session
 from db.models import DbPost
@@ -33,11 +34,19 @@ def get_all(db: Session) -> list[DbPost]:
     return db.query(DbPost).all()
 
 
-def get_post_by_id(post_id: int, db: Session):
-    return db.query(DbPost).filter(DbPost.id == post_id).first()
+def get_post_by_id(post_id: int, db: Session)-> DbPost:
+    product = db.query(DbPost).filter(DbPost.id == post_id).first()
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'Product with id = {id} not found')
+    return  product
 
 
 def get_post_by_author(
         author: str,
-        db: Session):
-    return db.query(DbPost).filter(DbPost.author == author).all()
+        db: Session) -> list[DbPost]:
+    product = db.query(DbPost).filter(DbPost.author == author).all()
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'Product with category = {id} not found')
+    return product

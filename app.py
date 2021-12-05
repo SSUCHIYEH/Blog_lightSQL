@@ -1,8 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from router import blog
-from router import user
+from router import blog, user, like, comment
 from db import models
 from db.database import engine
 
@@ -15,9 +14,12 @@ app = FastAPI(
 )
 app.include_router(blog.router)
 app.include_router(user.router)
+app.include_router(like.router)
+app.include_router(comment.router)
+
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", port= 5000, reload=True)
+    uvicorn.run("app:app", port=5000, reload=True)
 
 
 origins = [

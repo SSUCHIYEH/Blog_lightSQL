@@ -21,8 +21,8 @@ def get_all_post(db: Session = Depends(get_db)):
     return db_post.db_feed(db)
 
 
-@router.get('/id/{post_id}}', response_model=PostResponseSchema)
-def get_post_by_id(post_id: str, db: Session = Depends(get_db)):
+@router.get('/id/{post_id}', response_model=PostResponseSchema)
+def get_post_by_id(post_id: int, db: Session = Depends(get_db)):
     return db_post.get_post_by_id(post_id=post_id, db=db)
 
 
